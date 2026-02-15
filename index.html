@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>NoVa Fun Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS (load first) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- MarkerCluster CSS (must be in <head>) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Fallback height so the map cannot collapse -->
+  <style>
+    #map { height: 600px; width: 100%; border: 1px solid #ccc; }
+  </style>
+
+  <!-- Your map styling -->
+  <link rel="stylesheet" href="leaflet/map.css" />
+</head>
+<body>
+
+<div class="header">
+  <h3>PlayNoVa Map</h3>
+  <p>Work in Progress. ©OpenStreetMap contributors.</p>
+</div>
+
+  <div id="map"></div>
+
+  <!-- JS (order matters). Using defer keeps the DOM order intact. -->
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- MarkerCluster + SubGroup plugins (must load before your map.js) -->
+  <script defer src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script defer src="https://unpkg.com/leaflet.featuregroup.subgroup@1.0.2/dist/leaflet.featuregroup.subgroup.js"></script>
+
+  <!-- Your map JS -->
+  <script defer src="leaflet/map.js"></script>
+
+</body>
+</html>

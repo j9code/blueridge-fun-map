@@ -1,0 +1,382 @@
+/* =========================================
+   Page layout
+   ========================================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, sans-serif;
+}
+
+/* Page padding from screen edge */
+body {
+  padding: 12px 16px;
+}
+
+/* Header layout */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  gap: 2px;
+  padding-bottom: 6px;
+}
+
+.header h3,
+.header p {
+  margin: 0;
+}
+
+.header p {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: #555;
+}
+
+/* =========================================
+   Map container
+   ========================================= */
+#map {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-top: 8px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  #map {
+    height: calc(100vh - 120px);
+    margin-top: 6px;
+    border: 0;
+  }
+}
+
+/* =========================================
+   Map icons (Font Awesome + halo)
+   ========================================= */
+
+/* Remove Leaflet default div icon box */
+.leaflet-div-icon.poi-icon {
+  background: transparent;
+  border: none;
+}
+
+/* Leaflet wrapper */
+.poi-icon {
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+}
+
+/* Inner marker */
+.poi-marker {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+
+/* Halo behind icon */
+.poi-halo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 19px;
+  height: 19px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.28;
+  pointer-events: none;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Font Awesome glyph wrapper */
+.poi-fa {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.poi-fa i {
+  font-size: 13px;
+  line-height: 1;
+  color: #606060; /* soft graphite */
+  opacity: 0.70;
+}
+
+/* =========================================
+   Category halo colors (map markers)
+   ========================================= */
+.poi-icon.mini-golf   .poi-halo { background: #5f7f6e; }  /* sage */
+.poi-icon.arcade      .poi-halo { background: #b46a4a; }  /* terracotta */
+.poi-icon.gaming      .poi-halo { background: #6a6f73; }  /* slate */
+.poi-icon.trampoline  .poi-halo { background: #7c8f7a; }  /* muted olive */
+.poi-icon.laser       .poi-halo { background: #4f8a8b; }  /* dusty teal */
+.poi-icon.indoor-play .poi-halo { background: #3f5f7a; }  /* denim */
+.poi-icon.climbing    .poi-halo { background: #c07a3d; }  /* burnt orange */
+.poi-icon.karting     .poi-halo { background: #6b4e3d; }  /* warm brown */
+.poi-icon.escape      .poi-halo { background: #b8a14f; }  /* muted mustard */
+.poi-icon.bowling     .poi-halo { background: #7a7f84; }  /* cool gray */
+.poi-icon.carousel    .poi-halo { background: #9b6fa3; }  /* dusty lavender */
+.poi-icon.train       .poi-halo { background: #a34f3d; }  /* muted red */
+.poi-icon.scooter     .poi-halo { background: #7d6aa5; }  /* soft violet */
+.poi-icon.water-park  .poi-halo { background: #2f6c8f; }  /* ocean */
+.poi-icon.zoo         .poi-halo { background: #6c5238; }  /* cocoa */
+.poi-icon.skydive     .poi-halo { background: #617c9a; }  /* steel blue */
+.poi-icon.skating     .poi-halo { background: #3f8c8f; }  /* cool teal */
+.poi-icon.slide       .poi-halo { background: #927fb3; }  /*  */
+
+
+/* =========================================
+   MarkerCluster styling (soft/airy)
+   ========================================= */
+
+/* Round cluster bubbles */
+.marker-cluster,
+.marker-cluster div {
+  border-radius: 999px;
+}
+
+/* Outer cluster ring */
+.marker-cluster {
+  background: rgba(0, 0, 0, 0.10);   /* soft charcoal haze */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+}
+
+/* Inner circle + count */
+.marker-cluster > div {
+  background: rgba(255, 255, 255, 0.85); /* airy light center */
+  color: #2f2f2f;                         /* charcoal count */
+  font: 600 12px/32px system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 4px;  /* centers inside default 40x40 cluster */
+  margin-top: 4px;
+  border: 1px solid rgba(0,0,0,0.10);
+}
+
+/* Slightly bigger cluster on mobile (easier tapping) */
+@media (max-width: 768px) {
+  .marker-cluster > div {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    margin-left: 2px;
+    margin-top: 2px;
+    font-size: 13px;
+  }
+}
+
+/* Keep hover subtle */
+.marker-cluster:hover {
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* Ensure cluster bubbles sit above tiles but below controls */
+.leaflet-pane .marker-cluster {
+  z-index: 600;
+}
+
+/* =========================================
+   Legend
+   ========================================= */
+.legend {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font: 12px/1 system-ui, sans-serif;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+  
+/* disables desktop scroll for adding new categories*/
+  max-height: none;
+  overflow-y: auto;
+}
+
+/* Force opaque background — wins cascade */
+.leaflet-control.legend,
+.leaflet-control .legend {
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+.legend-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-swatch {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+
+.legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.legend-toggle {
+  border: 1px solid #bbb;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font: 12px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.legend-body.is-collapsed {
+  display: none;
+}
+
+/* Allow long category names to wrap */
+.legend-item {
+  align-items: flex-start;
+}
+
+.legend-item span:last-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Mobile legend */
+@media (max-width: 768px) {
+  .legend {
+    width: auto;
+    max-width: 82vw;
+    max-height: 40vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    font-size: 13px;
+  }
+}
+
+/* Halo behind legend icons */
+.legend-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.28;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Legend glyph */
+.legend-glyph {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+}
+
+.legend-glyph i {
+  font-size: 12px;
+  color: #606060;
+}
+
+/* =========================================
+   Category halo colors (legend)
+   ========================================= */
+.poi-icon.mini-golf   .legend-dot { background: #5f7f6e; }
+.poi-icon.arcade      .legend-dot { background: #b46a4a; }
+.poi-icon.gaming      .legend-dot { background: #6a6f73; }
+.poi-icon.trampoline  .legend-dot { background: #7c8f7a; }
+.poi-icon.laser       .legend-dot { background: #4f8a8b; }
+.poi-icon.indoor-play .legend-dot { background: #3f5f7a; }
+.poi-icon.climbing    .legend-dot { background: #c07a3d; }
+.poi-icon.karting     .legend-dot { background: #6b4e3d; }
+.poi-icon.escape      .legend-dot { background: #b8a14f; }
+.poi-icon.bowling     .legend-dot { background: #7a7f84; }
+.poi-icon.carousel    .legend-dot { background: #9b6fa3; }
+.poi-icon.train       .legend-dot { background: #a34f3d; }
+.poi-icon.scooter     .legend-dot { background: #7d6aa5; }
+.poi-icon.water-park  .legend-dot { background: #2f6c8f; }
+.poi-icon.zoo         .legend-dot { background: #6c5238; }
+.poi-icon.skydive     .legend-dot { background: #617c9a; }
+.poi-icon.skating     .legend-dot { background: #3f8c8f; }
+.poi-icon.slide .legend-dot { background: #927fb3; }
+
+
+/* =========================================
+   Hover tooltips (match legend style)
+   ========================================= */
+.leaflet-tooltip {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 6px 8px;
+  font: 12px/1 system-ui, sans-serif;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+  color: #222;
+}
+
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+  border: none;
+}
+
+/* =========================================
+   Layers control styling
+   ========================================= */
+
+/* Styles the All/None buttons inside the Layers control */
+.layers-bulk {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0 8px 0;
+}
+
+.layers-bulk-btn {
+  border: 1px solid #bbb;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font: 12px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.layers-bulk-btn:hover {
+  background: #f2f2f2;
+}
+
+/* Leaflet Layers control – match legend font */
+.leaflet-control-layers {
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+/* Leaflet Layers control – match legend spacing (icon-like air) */
+.leaflet-control-layers label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.leaflet-control-layers input {
+  margin-top: 0;
+}
