@@ -21,7 +21,7 @@
     }
 
     // 1) Map
-    var map = L.map('map', { zoomControl: false }).setView([38.95, -77.35], 10);
+    var map = L.map('map', { zoomControl: false }).setView([38.66, -78.15], 10);
 
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
