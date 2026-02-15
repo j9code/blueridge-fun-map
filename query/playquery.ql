@@ -2,13 +2,17 @@
 
 [out:json][timeout:180];
 
-// --- Blue Ridge Region counties (Virginia) ---
+// --- Blue Ridge Region counties and independent cities (Virginia) ---
 (
   rel(1633325);  // Clarke County
   rel(2534201);  // Rappahannock County
   rel(1633332);  // Warren County
   rel(2534173);  // Culpeper County
   rel(2534189);  // Madison County
+  rel(207046);   // Front Royal, VA
+  rel(207037);   // Winchester, VA
+  rel(207020);   // Culpeper, VA  
+  rel(206975);   // Berryville, VA
 );
 
 // Convert relations to one region
