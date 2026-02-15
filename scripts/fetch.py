@@ -35,6 +35,10 @@ DEFAULT_DROP_THRESHOLD = 50  # percent
 DEFAULT_MAX_DATA_LAG_HOURS = 48
 REQUEST_TIMEOUT = 180  # seconds
 
+# Retry behavior: if ALL endpoints fail, wait an hour and try again once.
+RETRY_ROUNDS = 2                 # total rounds (initial + 1 retry)
+RETRY_DELAY_SECONDS = 60 * 60    # 1 hour
+
 
 # ---------------------------------------------------------------------------
 # Query reading
@@ -86,34 +90,48 @@ def fetch_overpass(query):
         os.environ.get("PLAYNOVA_MAX_DATA_LAG_HOURS", DEFAULT_MAX_DATA_LAG_HOURS)
     )
     encoded = urllib.parse.urlencode({"data": query}).encode("utf-8")
+
     last_error = None
+    last_endpoint = None
 
-    for endpoint in OVERPASS_ENDPOINTS:
-        print(f"Trying {endpoint} ...")
-        try:
-            req = urllib.request.Request(
-                endpoint,
-                data=encoded,
-                headers={"User-Agent": "playnova/1.0"},
+    for round_idx in range(RETRY_ROUNDS):
+        if round_idx > 0:
+            print(
+                f"All endpoints failed. Waiting {RETRY_DELAY_SECONDS // 60} minutes "
+                f"then retrying ({round_idx + 1}/{RETRY_ROUNDS})...",
+                file=sys.stderr,
             )
-            with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
-                body = resp.read().decode("utf-8")
+            time.sleep(RETRY_DELAY_SECONDS)
 
-            data = json.loads(body)
+        for endpoint in OVERPASS_ENDPOINTS:
+            print(f"Trying {endpoint} ...")
+            try:
+                req = urllib.request.Request(
+                    endpoint,
+                    data=encoded,
+                    headers={"User-Agent": "playnova/1.0"},
+                )
+                with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
+                    body = resp.read().decode("utf-8")
 
-            if not check_data_freshness(data, max_lag_hours):
-                print("  Data too stale, trying next server...", file=sys.stderr)
+                data = json.loads(body)
+
+                if not check_data_freshness(data, max_lag_hours):
+                    print("  Data too stale, trying next server...", file=sys.stderr)
+                    continue
+
+                print(f"  Success: {len(data.get('elements', []))} elements")
+                return data
+
+            except Exception as e:
+                print(f"  Failed: {e}", file=sys.stderr)
+                last_error = e
+                last_endpoint = endpoint
                 continue
 
-            print(f"  Success: {len(data.get('elements', []))} elements")
-            return data
-
-        except Exception as e:
-            print(f"  Failed: {e}", file=sys.stderr)
-            last_error = e
-            continue
-
-    print("Error: All Overpass endpoints failed.", file=sys.stderr)
+    print("Error: All Overpass endpoints failed after retry.", file=sys.stderr)
+    if last_endpoint:
+        print(f"Last endpoint tried: {last_endpoint}", file=sys.stderr)
     if last_error:
         print(f"Last error: {last_error}", file=sys.stderr)
     sys.exit(1)
