@@ -30,7 +30,7 @@ map_to_area ->.region;
   nwr["tourism"="zoo"](area.region);
 
   // sport-based categories 
-  nwr["sport"~"^(climbing_adventure|laser_tag|karting|indoor_skydiving|10pin|roller_skating|ice_skating)"](area.region);
+  nwr["sport"~"^(climbing_adventure|laser_tag|karting|indoor_skydiving|10pin|roller_skating|ice_skating)$"](area.region);
 );
 
 // For good GeoJSON output (points for polygons too)
