@@ -29,7 +29,7 @@ OVERPASS_ENDPOINTS = [
 ]
 
 QUERY_FILE = "query/playquery.ql"
-OUTPUT_FILE = "data/novafunmap.geojson"
+OUTPUT_FILE = "data/funmap.geojson"
 
 DEFAULT_DROP_THRESHOLD = 50  # percent
 DEFAULT_MAX_DATA_LAG_HOURS = 48
