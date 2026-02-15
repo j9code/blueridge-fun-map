@@ -1,1 +1,176 @@
-
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-02-15T02:15:10Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/696435411",
+        "addr:city": "Winchester",
+        "addr:country": "US",
+        "addr:housenumber": "145",
+        "addr:postcode": "22601",
+        "addr:state": "VA",
+        "addr:street": "E. Tevis Street",
+        "amenity": "restaurant",
+        "brand": "Chuck E. Cheese",
+        "brand:wikidata": "Q2438391",
+        "building": "yes",
+        "cuisine": "pizza",
+        "leisure": "amusement_arcade",
+        "name": "Chuck E. Cheese",
+        "opening_hours": "Mo-Th 11:00-21:00; Fr 11:00-22:00; Sa 10:00-22:00; Su 11:00-21:00",
+        "ref": "va_winchester_145-e.-tevis-st.",
+        "website": "https://locations.chuckecheese.com/us/va/winchester/145-e.-tevis-st.",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.1747691,
+          39.1522298
+        ]
+      },
+      "id": "way/696435411"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1214531859",
+        "building": "yes",
+        "leisure": "bowling_alley",
+        "name": "Northside Lanes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.1595889,
+          39.1984317
+        ]
+      },
+      "id": "way/1214531859"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1238892716",
+        "leisure": "miniature_golf",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.226892,
+          38.9581693
+        ]
+      },
+      "id": "way/1238892716"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1321519188",
+        "addr:city": "Brandy Station",
+        "addr:housenumber": "19372",
+        "addr:postcode": "22714",
+        "addr:state": "VA",
+        "addr:street": "Brandy Road",
+        "building": "commercial",
+        "leisure": "indoor_play",
+        "name": "Bounce With Us",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.8945523,
+          38.5012576
+        ]
+      },
+      "id": "way/1321519188"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11673332745",
+        "leisure": "escape_game",
+        "name": "Puzzle Room Live"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.9964506,
+          38.4702621
+        ]
+      },
+      "id": "node/11673332745"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11674156536",
+        "leisure": "amusement_arcade",
+        "name": "Unreality"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.9976507,
+          38.4696279
+        ]
+      },
+      "id": "node/11674156536"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12086091790",
+        "leisure": "indoor_play",
+        "name": "Little Gym of Winchester"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.1923846,
+          39.1433952
+        ]
+      },
+      "id": "node/12086091790"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12110614871",
+        "leisure": "escape_game",
+        "name": "Wreck It Rage Roomz"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.1572462,
+          39.1997332
+        ]
+      },
+      "id": "node/12110614871"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13431341700",
+        "leisure": "amusement_arcade",
+        "name": "Throwbacks"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.994491,
+          38.4727983
+        ]
+      },
+      "id": "node/13431341700"
+    }
+  ]
+}
