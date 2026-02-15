@@ -1,4 +1,4 @@
-// PlayNoVA — map.js (ES5 safe) — CLUSTERING BY LOCATION (shared clusters, category toggles)
+// PlayMap — map.js (ES5 safe) — CLUSTERING BY LOCATION (shared clusters, category toggles)
 
 (function () {
   window.addEventListener('load', function () {
@@ -208,7 +208,7 @@
     addAllNoneButtonsInsideLayersControl();
 
     // 8) Load GeoJSON + build clustered overlays (SUBGROUPS)
-    var geojsonUrl = 'data/novafunmap.geojson';
+    var geojsonUrl = 'data/funmap.geojson';
 
     fetch(geojsonUrl)
       .then(function (r) {
