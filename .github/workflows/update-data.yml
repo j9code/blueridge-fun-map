@@ -1,4 +1,4 @@
-name: Update PlayNoVA GeoJSON Data
+name: Update PlayBlueRidge GeoJSON Data
 
 on:
   schedule:
