@@ -25,13 +25,13 @@ jobs:
       - name: Fetch and convert data
         run: python3 scripts/fetch.py
         env:
-          PLAYNOVA_DROP_THRESHOLD: ${{ vars.DROP_THRESHOLD || '50' }}
-          PLAYNOVA_MAX_DATA_LAG_HOURS: ${{ vars.MAX_DATA_LAG_HOURS || '48' }}
+          FUNMAP_DROP_THRESHOLD: ${{ vars.DROP_THRESHOLD || '50' }}
+          FUNMAP_MAX_DATA_LAG_HOURS: ${{ vars.MAX_DATA_LAG_HOURS || '48' }}
+          FUNMAP_USER_AGENT: "playblueridge-fetch/1.0 (GitHub Actions)"
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/novafunmap.geojson
-          git diff --staged --quiet && echo "No changes to commit." || (git commit -m "Update novafunmap.geojson" && git push)
-
+          git add data/funmap.geojson
+          git diff --staged --quiet && echo "No changes to commit." || (git commit -m "Update funmap.geojson" && git push)
