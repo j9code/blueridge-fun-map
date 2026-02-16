@@ -2,7 +2,6 @@ name: Update PlayBlueRidge GeoJSON Data
 
 on:
   schedule:
-    # Run at 10:00 UTC daily (5:00 AM EST)
     - cron: "0 10 * * *"
   workflow_dispatch:
 
@@ -17,21 +16,72 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug - prove what code is running
+        run: |
+          set -euxo pipefail
+          echo "=== Commit SHA running ==="
+          git rev-parse HEAD
+
+          echo "=== Workflows present ==="
+          ls -la .github/workflows
+
+          echo "=== Any 'novafunmap' left in workflows? ==="
+          grep -RIn "novafunmap" .github/workflows || true
+
+          echo "=== Any 'PLAYNOVA_' left in workflows? ==="
+          grep -RIn "PLAYNOVA_" .github/workflows || true
+
+          echo "=== fetch.py OUTPUT_FILE ==="
+          grep -n "OUTPUT_FILE" scripts/fetch.py || true
+
+          echo "=== fetch.py env var names ==="
+          grep -n "FUNMAP_" scripts/fetch.py || true
+
+          echo "=== Query file exists? ==="
+          ls -la query || true
+
+          echo "=== Current data folder ==="
+          ls -la data || true
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
       - name: Fetch and convert data
-        run: python3 scripts/fetch.py
+        # Prevents the job from looking "stuck" if the script hits the 60-minute sleep
+        timeout-minutes: 25
         env:
           FUNMAP_DROP_THRESHOLD: ${{ vars.DROP_THRESHOLD || '50' }}
           FUNMAP_MAX_DATA_LAG_HOURS: ${{ vars.MAX_DATA_LAG_HOURS || '48' }}
           FUNMAP_USER_AGENT: "playblueridge-fetch/1.0 (GitHub Actions)"
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euxo pipefail
+          python3 --version
+          python3 scripts/fetch.py
+
+          echo "=== After fetch: data folder ==="
+          ls -la data || true
+
+          echo "=== Require output file ==="
+          test -f data/funmap.geojson || (echo "MISSING: data/funmap.geojson" && exit 1)
+
+          echo "=== Output size ==="
+          wc -c data/funmap.geojson
 
       - name: Commit and push if changed
         run: |
+          set -euxo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          echo "=== Git status ==="
+          git status --porcelain
+
           git add data/funmap.geojson
+
+          echo "=== Staged diff stat ==="
+          git diff --staged --stat || true
+
           git diff --staged --quiet && echo "No changes to commit." || (git commit -m "Update funmap.geojson" && git push)
