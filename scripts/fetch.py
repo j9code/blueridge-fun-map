@@ -4,7 +4,7 @@
 Reads an Overpass QL query from query/playquery.ql, executes it against
 multiple Overpass API endpoints with fallback, converts the response to
 GeoJSON where every feature is a Point (nodes use lat/lon; ways/relations
-use 'center' or bounds fallback), and writes data/novafunmap.geojson.
+use 'center' or bounds fallback), and writes data/funmap.geojson.
 
 Zero external dependencies — stdlib only.
 
@@ -16,7 +16,6 @@ import json
 import os
 import sys
 import time
-import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -35,9 +34,14 @@ DEFAULT_DROP_THRESHOLD = 50  # percent
 DEFAULT_MAX_DATA_LAG_HOURS = 48
 REQUEST_TIMEOUT = 180  # seconds
 
-# Retry behavior: if ALL endpoints fail, wait an hour and try again once.
+# If ALL endpoints fail, wait 60 minutes and try again once.
 RETRY_ROUNDS = 2                 # total rounds (initial + 1 retry)
-RETRY_DELAY_SECONDS = 60 * 60    # 1 hour
+RETRY_DELAY_SECONDS = 60 * 60    # 60 minutes
+
+# Generic env var names (override per repo/job as needed)
+ENV_DROP_THRESHOLD = "FUNMAP_DROP_THRESHOLD"
+ENV_MAX_DATA_LAG_HOURS = "FUNMAP_MAX_DATA_LAG_HOURS"
+ENV_USER_AGENT = "FUNMAP_USER_AGENT"
 
 
 # ---------------------------------------------------------------------------
@@ -86,9 +90,8 @@ def check_data_freshness(data, max_lag_hours):
 
 
 def fetch_overpass(query):
-    max_lag_hours = float(
-        os.environ.get("PLAYNOVA_MAX_DATA_LAG_HOURS", DEFAULT_MAX_DATA_LAG_HOURS)
-    )
+    max_lag_hours = float(os.environ.get(ENV_MAX_DATA_LAG_HOURS, DEFAULT_MAX_DATA_LAG_HOURS))
+    user_agent = os.environ.get(ENV_USER_AGENT, "funmap-fetch/1.0")
     encoded = urllib.parse.urlencode({"data": query}).encode("utf-8")
 
     last_error = None
@@ -109,7 +112,7 @@ def fetch_overpass(query):
                 req = urllib.request.Request(
                     endpoint,
                     data=encoded,
-                    headers={"User-Agent": "playnova/1.0"},
+                    headers={"User-Agent": user_agent},
                 )
                 with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
                     body = resp.read().decode("utf-8")
@@ -250,7 +253,7 @@ def main():
 
     print(f"Converted {len(features)} features.")
 
-    threshold = int(os.environ.get("PLAYNOVA_DROP_THRESHOLD", DEFAULT_DROP_THRESHOLD))
+    threshold = int(os.environ.get(ENV_DROP_THRESHOLD, DEFAULT_DROP_THRESHOLD))
     check_feature_drop(len(features), OUTPUT_FILE, threshold)
 
     write_geojson(features, OUTPUT_FILE)
@@ -259,4 +262,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
