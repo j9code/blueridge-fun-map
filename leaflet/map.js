@@ -84,8 +84,8 @@
 
     // 5) Categories
     var categories = [
-      { name: "Amusement Rides",    key: "scooter",     color: "#927fb3", fa: '<i class="fa-solid fa-dragon"></i>',         filter: function (f) { return f.properties && f.properties.attraction === "amusement_ride"; } },
       { name: "Amusement Centers",  key: "arcade",      color: "#d57345", fa: '<i class="fa-solid fa-face-smile"></i>',     filter: function (f) { return f.properties && f.properties.leisure === "amusement_arcade"; } },
+      { name: "Amusement Rides",    key: "scooter",     color: "#927fb3", fa: '<i class="fa-solid fa-dragon"></i>',         filter: function (f) { return f.properties && f.properties.attraction === "amusement_ride"; } },
       { name: "Animal Parks",       key: "zoo",         color: "#663300", fa: '<i class="fa-solid fa-paw"></i>',            filter: function (f) { return f.properties && f.properties.tourism === "zoo"; } },
       { name: "Bowling",            key: "bowling",     color: "#4d4d4d", fa: '<i class="fa-solid fa-bowling-ball"></i>',   filter: function (f) { return ((f.properties && f.properties.leisure === "bowling_alley") || sportHas(f, "10pin")); } },
       { name: "Carousels",          key: "carousel",    color: "#c77cc4", fa: '<i class="fa-solid fa-horse-head"></i>',     filter: function (f) { return f.properties && f.properties.attraction === "carousel"; } },
@@ -99,7 +99,7 @@
       { name: "Mini Golf",          key: "mini-golf",   color: "#537f69", fa: '<i class="fa-solid fa-golf-ball-tee"></i>',  filter: function (f) { return f.properties && f.properties.leisure === "miniature_golf"; } },
       { name: "Miniature Trains",   key: "train",       color: "#cc2900", fa: '<i class="fa-solid fa-train"></i>',          filter: function (f) { return f.properties && f.properties.attraction === "train"; } },
       { name: "Skating Rinks",      key: "skating",     color: "#0da9b8", fa: '<i class="fa-solid fa-person-skating"></i>', filter: function (f) { return ((f.properties && f.properties.leisure === "ice_rink") || sportHas(f, "ice_skating") || sportHas(f, "roller_skating")); } },
-      { name: "Slides", key: "slide", color: "#927fb3", fa: '<i class="fa-solid fa-hill-rockslide"></i>',                   filter: function (f) { return f.properties && f.properties.attraction === "slide"; } },
+      { name: "Slides",             key: "slide",       color: "#927fb3", fa: '<i class="fa-solid fa-hill-rockslide"></i>', filter: function (f) { return f.properties && f.properties.attraction === "slide"; } },
       { name: "Trampoline Parks",   key: "trampoline",  color: "#a8a563", fa: '<i class="fa-solid fa-person-falling"></i>', filter: function (f) { return f.properties && f.properties.leisure === "trampoline_park"; } },
       { name: "Water Parks",        key: "water-park",  color: "#3a3a80", fa: '<i class="fa-solid fa-water"></i>',          filter: function (f) { return f.properties && f.properties.leisure === "water_park"; } }
     ];
