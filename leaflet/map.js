@@ -84,7 +84,7 @@
 
     // 5) Categories
     var categories = [
-      { name: "Animal Scooters",    key: "scooter",     color: "#927fb3", fa: '<i class="fa-solid fa-dragon"></i>',          filter: function (f) { return f.properties && f.properties.attraction === "animal_scooter"; } },
+      { name: "Amusement Rides",    key: "scooter",     color: "#927fb3", fa: '<i class="fa-solid fa-dragon"></i>',         filter: function (f) { return f.properties && f.properties.attraction === "amusement_ride"; } },
       { name: "Amusement Centers",  key: "arcade",      color: "#d57345", fa: '<i class="fa-solid fa-face-smile"></i>',     filter: function (f) { return f.properties && f.properties.leisure === "amusement_arcade"; } },
       { name: "Animal Parks",       key: "zoo",         color: "#663300", fa: '<i class="fa-solid fa-paw"></i>',            filter: function (f) { return f.properties && f.properties.tourism === "zoo"; } },
       { name: "Bowling",            key: "bowling",     color: "#4d4d4d", fa: '<i class="fa-solid fa-bowling-ball"></i>',   filter: function (f) { return ((f.properties && f.properties.leisure === "bowling_alley") || sportHas(f, "10pin")); } },
