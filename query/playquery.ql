@@ -24,7 +24,7 @@ map_to_area ->.region;
   nwr["leisure"~"^(miniature_golf|amusement_arcade|trampoline_park|escape_game|bowling_alley|indoor_play|water_park|gaming_lounge)$"](area.region);
 
   // attraction-based categories
-  nwr["attraction"~"^(train|carousel|animal_scooter|slide)$"](area.region);
+  nwr["attraction"~"^(train|carousel|animal_scooter|slide|amusement_ride)$"](area.region);
 
   // tourism-based categories
   nwr["tourism"="zoo"](area.region);
